@@ -1,0 +1,62 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\tethranialn.DESKTOP-QE28BKQ\\source\\repos\\prog2sem_curseofweek\\prog2sem_curseofweek\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\tethranialn.DESKTOP-QE28BKQ\\source\\repos\\prog2sem_curseofweek\\prog2sem_curseofweek\\task.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:task.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\tethranialn.DESKTOP-QE28BKQ\\source\\repos\\prog2sem_curseofweek\\prog2sem_curseofweek\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "task.txt",
+              "DocumentMoniker": "C:\\Users\\tethranialn.DESKTOP-QE28BKQ\\source\\repos\\prog2sem_curseofweek\\prog2sem_curseofweek\\task.txt",
+              "RelativeDocumentMoniker": "task.txt",
+              "ToolTip": "C:\\Users\\tethranialn.DESKTOP-QE28BKQ\\source\\repos\\prog2sem_curseofweek\\prog2sem_curseofweek\\task.txt",
+              "RelativeToolTip": "task.txt",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB0AAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-04-14T14:25:42.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\tethranialn.DESKTOP-QE28BKQ\\source\\repos\\prog2sem_curseofweek\\prog2sem_curseofweek\\main.cpp",
+              "RelativeDocumentMoniker": "main.cpp",
+              "ToolTip": "C:\\Users\\tethranialn.DESKTOP-QE28BKQ\\source\\repos\\prog2sem_curseofweek\\prog2sem_curseofweek\\main.cpp",
+              "RelativeToolTip": "main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-14T14:25:08.567Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
