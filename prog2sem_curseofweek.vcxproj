@@ -128,17 +128,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Del.cpp" />
-    <ClCompile Include="Inp.cpp" />
+    <ClCompile Include="InpS.cpp" />
     <ClCompile Include="list.cpp" />
     <ClCompile Include="listFunc.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="task.txt" />
+    <Text Include="input.txt" />
+    <Text Include="TASK.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Del.h" />
-    <ClInclude Include="Inp.h" />
+    <ClInclude Include="InpS.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="listFunc.h" />
   </ItemGroup>

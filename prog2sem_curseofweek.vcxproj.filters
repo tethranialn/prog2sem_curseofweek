@@ -27,12 +27,13 @@
     <ClCompile Include="list.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Inp.cpp">
+    <ClCompile Include="InpS.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="task.txt" />
+    <Text Include="TASK.txt" />
+    <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="list.h">
@@ -44,7 +45,7 @@
     <ClInclude Include="Del.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Inp.h">
+    <ClInclude Include="InpS.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

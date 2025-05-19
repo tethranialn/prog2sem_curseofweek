@@ -1,45 +1,56 @@
 #include "list.h"
-#include "listFunc.h"
 #include <iostream>
 
-void InitELStroka(EL_Stroka*& el, const char* value) 
-{
-    el = new EL_Stroka;
-    CopyString(el->A, value, N);
-    el->next = nullptr;
-}
+void InitBlock(EL_Stroka*& block, BlockType type) {
+    block = new EL_Stroka;
+    block->type = type;
+    block->next = nullptr;
+    block->sentence_id = 0;
 
-void InitFormStroka(Form_Stroka& fs) 
-{
-    fs.h = fs.l = nullptr;
-    fs.L = 0;
-}
-
-void InitELV(EL_V*& el) 
-{
-    el = new EL_V;
-    InitFormStroka(el->F);
-    el->next = nullptr;
-}
-
-void InitFormV(Form_V& fv) 
-{
-    fv.h = fv.cur = fv.last = nullptr;
-}
-
-void InsertString(Form_Stroka& fs, const char* value) 
-{
-    EL_Stroka* newEl;
-    InitELStroka(newEl, value);
-
-    if (!fs.h)
-    {
-        fs.h = fs.l = newEl;
-        fs.L = 1;
-        return;
+    switch (type) {
+    case LETTERS:
+        block->content.letters.buffer_size = 16;
+        block->content.letters.data = new char[16];
+        block->content.letters.size = 0;
+        break;
+    case SPACES:
+        block->content.spaces.spaceChar = ' ';
+        block->content.spaces.count = 1;
+        break;
+    case PUNCTUATION:
+        block->content.punctuation.symbol = '\0';
+        break;
+    case COMMA:  
+        block->content.comma.comma = ',';
+        break;
     }
+}
 
-    fs.l->next = newEl;
-    fs.l = newEl;
-    fs.L++;
+void InitLine(Form_Stroka& line) {
+    line.head = line.tail = nullptr;
+    line.count = 0;
+}
+
+void InitLevel(EL_V*& level) {
+    level = new EL_V;
+    InitLine(level->line);
+    level->next = nullptr;
+}
+
+void InitDocument(Form_V& doc) {
+    doc.head = doc.tail = nullptr;
+    doc.total_sentences = 0;
+}
+
+void AddBlockToLine(Form_Stroka& line, EL_Stroka* block) {
+    if (!line.head) line.head = block;
+    else line.tail->next = block;
+    line.tail = block;
+    line.count++;
+}
+
+void AddLevelToDoc(Form_V& doc, EL_V* level) {
+    if (!doc.head) doc.head = level;
+    else doc.tail->next = level;
+    doc.tail = level;
 }

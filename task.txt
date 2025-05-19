@@ -1,44 +1,37 @@
-Задание: 
+Task: 
 
-	Текст представляет собой последовательность отдельных предложений, содержащих слова и
-	знаки пунктуации. Преобразовать текст в соответствии с последовательностью команд редактирования,
-	которые должны позволять вставлять, удалять и заменять заданные слова в определенных предложениях.
+  The text is a sequence of separate sentences containing words and
+punctuation marks. Convert text according to the sequence of editing commands,
+  which should allow you to insert, delete, and replace specified words in certain sentences.
 
-	Примеры команд редактирования:
-	Вставить в предложении новое слово перед заданным словом, удалить в предложении знак пунктуации, указанный и или все.
+  Examples of editing commands:
+Insert a new word in a sentence before the specified word, delete the punctuation mark in the sentence, and or all.
 
-	Варианты указания определенного предложения:
-	Предложение, заканчивающееся на указанное слово.
+  Options for specifying a specific offer:
+  A sentence ending with the specified word.
 
-	Варианты указания заданного слова:
-	Все в предложении, содержащее заданную последовательность символов.
+  Options for specifying a given word:
+  Everything in a sentence that contains a given sequence of characters.
 
 
-Условности:
+Conventions:
 
-	Текст можно хранить как двумерный список из четвертого задания, однако более сложный.
-	То есть элемент списка: слово как указатель с массивами, пробелы как массив с пробелом и их колличеством,
-							знаки препинания как одинарный элемент, в том числе и переход к следующей строке с табуляцией.
-							Каждый элемент может содержать маркер либо иметь длину.
-	Одним словом, список менее строгий и каждый элемент может содержать несоколько ссылок.
-	Помимо этого, должен быть и исходный текст, и обработанны.
-	Модульное представление.
-	Простой однонаправленный иерархиечский список, как в четвертом задании.
-	Классы или пользовательские типы.
-	Вся	представленная в программе информация хранится однократно: указатели и динамическая память.
-	За один запуск программы можно производить несколько действий.
-	Лучше не использовать свитч, ибо блоксхемы будут перегружены.
-	Входной файл со всеми неоднозначными позициями.
-	Выходной файл разбит на подробный протокол и простойы. 
-	Исходный текст представлен списком со стрелочками.
-	Пояснительная записка аналогично прошлому семестру, без нее не рассматривается.
-	Пояснительные иллюстрации.
-	Блоксхемы на самое важное, как в четвертом задании.
-	Нужно сделать меню с выбором функций или командный файл.
-
-Возможные сложности в тексте:
-
-	Пардлвыо длоы вдоыаодол! ПНГПЫФнпны?
-	ГЫпгшып				пггпп tewyrdsfjkslj iouas u
-	пгпф. ПНФЫПФЫНВАпыфнпв фгырвт ааааааааааааааааааааааааааааааааааааааAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-	    ааааааа. ПРЫФДЛфлооывдо
+  The text can be stored as a two-dimensional list from the fourth task, but it is more complex.
+  That is, an element of the list: a word as a pointer with arrays, spaces as an array with a space and their number,
+              punctuation marks as a single element, including the transition to the next line with tabs.
+              Each element can contain a marker or have a length.
+  In short, the list is less strict and each element may contain multiple links.
+  In addition, there must be both the source text and the processed ones.
+  Modular representation.
+  A simple unidirectional hierarchical list, as in the fourth task.
+  Classes or custom types.
+  All information presented in the program is stored once: pointers and dynamic memory.
+  Several actions can be performed during a single program launch.
+  It is better not to use a switch, because the blockchains will be overloaded.
+  An input file with all ambiguous positions.
+  The output file is divided into a detailed protocol and protocols. 
+  The source text is represented by a list with arrows.
+  The explanatory note is similar to the last semester, it is not considered without it.
+  Explanatory illustrations.
+  Block diagrams for the most important things, as in the fourth task.
+  You need to make a menu with a selection of functions or a batch file.
