@@ -1,0 +1,10 @@
+﻿  Del.cpp
+  Inp.cpp
+  list.cpp
+  listFunc.cpp
+  main.cpp
+C:\Users\chivo\OneDrive\Documents\GitHub\prog2sem_curseofweek\main.cpp(1,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\chivo\OneDrive\Documents\GitHub\prog2sem_curseofweek\main.cpp(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\chivo\OneDrive\Documents\GitHub\prog2sem_curseofweek\main.cpp(4,6): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  Создание кода...
+  prog2sem_curseofweek.vcxproj -> C:\Users\chivo\OneDrive\Documents\GitHub\prog2sem_curseofweek\x64\Debug\prog2sem_curseofweek.exe
