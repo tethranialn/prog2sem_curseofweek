@@ -5,22 +5,22 @@ void InitBlock(EL_Stroka*& block, BlockType type) {
     block = new EL_Stroka;
     block->type = type;
     block->next = nullptr;
+    block->next_word_block = nullptr;
     block->sentence_id = 0;
 
     switch (type) {
     case LETTERS:
-        block->content.letters.buffer_size = 16;
-        block->content.letters.data = new char[16];
+        block->content.letters.data[0] = '\0';
         block->content.letters.size = 0;
+        block->content.letters.is_word_part = false;
         break;
     case SPACES:
-        block->content.spaces.spaceChar = ' ';
         block->content.spaces.count = 1;
         break;
     case PUNCTUATION:
         block->content.punctuation.symbol = '\0';
         break;
-    case COMMA:  
+    case COMMA:
         block->content.comma.comma = ',';
         break;
     }
@@ -43,14 +43,22 @@ void InitDocument(Form_V& doc) {
 }
 
 void AddBlockToLine(Form_Stroka& line, EL_Stroka* block) {
-    if (!line.head) line.head = block;
-    else line.tail->next = block;
-    line.tail = block;
+    if (!line.head) {
+        line.head = line.tail = block;
+    }
+    else {
+        line.tail->next = block;
+        line.tail = block;
+    }
     line.count++;
 }
 
 void AddLevelToDoc(Form_V& doc, EL_V* level) {
-    if (!doc.head) doc.head = level;
-    else doc.tail->next = level;
-    doc.tail = level;
+    if (!doc.head) {
+        doc.head = doc.tail = level;
+    }
+    else {
+        doc.tail->next = level;
+        doc.tail = level;
+    }
 }

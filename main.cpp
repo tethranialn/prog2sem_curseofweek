@@ -3,10 +3,8 @@
 #include <fstream>
 #include <iostream>
 
-int main()
-{
+int main() {
     Form_V document;
-
     ReadDocument(document, "input.txt");
 
     std::ofstream fout("output.txt");
@@ -14,12 +12,12 @@ int main()
         std::cerr << "Error creating output file!" << std::endl;
         return 1;
     }
+
     PrintDocument(document, fout);
     fout.close();
 
     DeleteDocument(document);
 
-    std::cout << "Program completed successfully. Results saved to output.txt" << std::endl;
-
+    std::cout << "Processing completed. Results saved to output.txt" << std::endl;
     return 0;
 }

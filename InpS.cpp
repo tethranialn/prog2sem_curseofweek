@@ -7,11 +7,11 @@ bool IsLetter(char c) {
     return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
 }
 
-BlockType DetermineType(char c) {  // Новая функция определения типа
+BlockType DetermineType(char c) {
     if (IsLetter(c)) return LETTERS;
     if (c == ' ') return SPACES;
-    if (c == ',') return COMMA;     // Отдельная обработка запятых
-    return PUNCTUATION;             // Остальные знаки пунктуации
+    if (c == ',') return COMMA;
+    return PUNCTUATION;
 }
 
 void ReadDocument(Form_V& doc, const char* filename) {
@@ -28,74 +28,79 @@ void ReadDocument(Form_V& doc, const char* filename) {
 
     EL_Stroka* current_block = nullptr;
     EL_Stroka* current_word = nullptr;
-    int current_sentence = 0;
+    int current_sentence = 1;  // Исправлено: начинаем с 1
     bool in_sentence = false;
-
     char c;
+
     while (fin.get(c)) {
         if (c == '\n') {
-            if (current_block) {
-                AddBlockToLine(current_level->line, current_block);
-                current_block = nullptr;
+            if (current_level->line.head) {
+                EL_V* new_level = new EL_V;
+                InitLevel(new_level);
+                AddLevelToDoc(doc, new_level);
+                current_level = new_level;
             }
-            EL_V* new_level = new EL_V;
-            InitLevel(new_level);
-            AddLevelToDoc(doc, new_level);
-            current_level = new_level;
+            current_block = nullptr;
+            current_word = nullptr;
             continue;
         }
 
-        BlockType type = DetermineType(c); 
+        BlockType type = DetermineType(c);
+
+        if (type != LETTERS) {
+            current_word = nullptr;
+        }
 
         if (current_block && current_block->type != type) {
-            AddBlockToLine(current_level->line, current_block);
             current_block = nullptr;
         }
 
         if (!current_block) {
             InitBlock(current_block, type);
-            current_block->sentence_id = in_sentence ? current_sentence : 0;
+            current_block->sentence_id = current_sentence; // Актуальный ID
+            AddBlockToLine(current_level->line, current_block);
         }
+
         switch (type) {
-        case LETTERS:
-            if (current_block->content.letters.size >= current_block->content.letters.buffer_size) {
-                int new_size = current_block->content.letters.buffer_size * 2;
-                char* new_data = new char[new_size];
-                for (int i = 0; i < current_block->content.letters.size; ++i) {
-                    new_data[i] = current_block->content.letters.data[i];
+        case LETTERS: {
+            if (!current_word || current_word->content.letters.size >= 5) {
+                if (current_word) {
+                    InitBlock(current_block, LETTERS);
+                    current_block->content.letters.is_word_part = true;
+                    current_block->sentence_id = current_sentence; // Исправлено
+                    current_word->next_word_block = current_block;
+                    AddBlockToLine(current_level->line, current_block);
                 }
-                delete[] current_block->content.letters.data;
-                current_block->content.letters.data = new_data;
-                current_block->content.letters.buffer_size = new_size;
+                current_word = current_block;
             }
-            current_block->content.letters.data[current_block->content.letters.size++] = c;
+
+            if (current_word->content.letters.size < 5) {
+                current_word->content.letters.data[current_word->content.letters.size++] = c;
+                current_word->content.letters.data[current_word->content.letters.size] = '\0';
+            }
+
             if (!in_sentence) {
-                current_sentence++;
                 doc.total_sentences++;
                 in_sentence = true;
             }
-            current_block->sentence_id = current_sentence;
             break;
-
+        }
         case SPACES:
             current_block->content.spaces.count++;
             break;
-
-        case COMMA: 
-            AddBlockToLine(current_level->line, current_block);
-            current_block = nullptr;
+        case COMMA:
+            current_block->content.comma.comma = ',';
             break;
-
-        case PUNCTUATION: 
+        case PUNCTUATION:
             current_block->content.punctuation.symbol = c;
-            in_sentence = false;
-            AddBlockToLine(current_level->line, current_block);
-            current_block = nullptr;
+            if (in_sentence) {
+                current_sentence++; // Увеличиваем ТОЛЬКО здесь
+                in_sentence = false;
+            }
             break;
         }
     }
 
-    if (current_block) AddBlockToLine(current_level->line, current_block);
     fin.close();
 }
 
@@ -104,31 +109,36 @@ void PrintDocument(const Form_V& doc, std::ostream& out) {
     int level_num = 1;
     for (EL_V* level = doc.head; level; level = level->next) {
         out << "Level " << level_num++ << ":\n";
-        for (EL_Stroka* block = level->line.head; block; block = block->next) {
+        EL_Stroka* block = level->line.head;
+        while (block) {
+            if (block->type == LETTERS && block->content.letters.is_word_part) {
+                block = block->next;
+                continue;
+            }
             out << "  ";
             switch (block->type) {
-            case LETTERS:
-                out << "[LETTERS: \"";
-                for (int i = 0; i < block->content.letters.size; ++i) {
-                    out << block->content.letters.data[i];
+            case LETTERS: {
+                out << "[WORD: \"" << block->content.letters.data << "\"";
+                EL_Stroka* word_part = block->next_word_block;
+                while (word_part) {
+                    out << " -> \"" << word_part->content.letters.data << "\"";
+                    word_part = word_part->next_word_block;
                 }
-                out << "\" (Sent: " << block->sentence_id << ")]";
+                out << " (Sent: " << block->sentence_id << ")]";
                 break;
+            }
             case SPACES:
-                out << "[SPACES: '" << block->content.spaces.spaceChar
-                    << "' x" << block->content.spaces.count - 1
-                    << " (Sent: " << block->sentence_id << ")]";
+                out << "[SPACE x" << block->content.spaces.count - 1 << "]";
                 break;
-            case COMMA:  
-                out << "[COMMA: '" << block->content.comma.comma
-                    << "' (Sent: " << block->sentence_id << ")]";
+            case COMMA:
+                out << "[COMMA]";
                 break;
             case PUNCTUATION:
-                out << "[PUNCT: '" << block->content.punctuation.symbol
-                    << "' (Sent: " << block->sentence_id << ")]";
+                out << "[PUNCT: '" << block->content.punctuation.symbol << "']";
                 break;
             }
             out << "\n";
+            block = block->next;
         }
         out << "----------------\n";
     }

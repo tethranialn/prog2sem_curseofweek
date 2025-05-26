@@ -3,26 +3,24 @@
 #define LIST_H
 #include <fstream>
 
-enum BlockType { LETTERS, SPACES, PUNCTUATION, COMMA }; 
+enum BlockType { LETTERS, SPACES, PUNCTUATION, COMMA };
 
 struct EL_Stroka {
     BlockType type;
     union {
         struct {
-            char* data;
+            char data[6];  
             int size;
-            int buffer_size;
             bool is_word_part;
         } letters;
         struct {
-            char spaceChar;
             int count;
         } spaces;
         struct {
             char symbol;
         } punctuation;
         struct {
-            char comma; 
+            char comma;
         } comma;
     } content;
     EL_Stroka* next_word_block;
