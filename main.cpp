@@ -4,34 +4,83 @@
 #include <fstream>
 #include <iostream>
 
+void ShowMenu() {
+    system("cls");
+    std::cout << "\n======= Menu =======\n"
+        << "1. Insert word\n"
+        << "2. Remove specific punctuation\n"
+        << "3. Remove all punctuation\n"
+        << "4. Find sentence by last word\n"
+        << "5. Exit\n"
+        << "====================\n"
+        << "Choose option: ";
+}
+
 int main() {
     Form_V document;
     ReadDocument(document, "input.txt");
-
-    std::ofstream fout("output.txt");
-    if (!fout) {
-        std::cerr << "Error creating output file!" << std::endl;
-        return 1;
-    }
-
+    std::ofstream fout("output.txt", std::ofstream::trunc);
     PrintDocument(document, fout);
-    int sentenceNum;
-    char targetWord[100], newWord[100];
+    do {
+        int choice;
+        ShowMenu();
+        std::cin >> choice;
+        std::cin.ignore();
 
-    std::cout << "Enter sentence number: ";
-    std::cin >> sentenceNum;
-    std::cout << "Enter target word: ";
-    std::cin >> targetWord;
-    std::cout << "Enter new word: ";
-    std::cin >> newWord;
-
-    InsertWord(document, targetWord, newWord, sentenceNum);
-
-    PrintOperationResult(document, targetWord, newWord, sentenceNum, fout);
-    fout.close();
+        switch (choice) {
+        case 1: {
+            int sentenceNum;
+            char buffer[100];
+            std::cout << "Enter sentence number: ";
+            std::cin >> sentenceNum;
+            std::cout << "Enter target word: ";
+            std::cin >> buffer;
+            char newWord[100];
+            std::cout << "Enter new word: ";
+            std::cin >> newWord;
+            InsertWord(document, buffer, newWord, sentenceNum);
+            PrintOperationResult(document, buffer, newWord, sentenceNum, fout);
+            break;
+        }
+        case 2: {
+            int sentenceNum;
+            char symbol;
+            std::cout << "Enter sentence number: ";
+            std::cin >> sentenceNum;
+            std::cout << "Enter symbol: ";
+            std::cin >> symbol;
+            RemoveSpecificPunctuation(document, sentenceNum, symbol, fout);
+            break;
+        }
+        case 3: {
+            int sentenceNum;
+            std::cout << "Enter sentence number: ";
+            std::cin >> sentenceNum;
+            RemoveAllPunctuation(document, sentenceNum, fout);
+            break;
+        }
+        case 4: {
+            char buffer[100];
+            std::cout << "Enter last word: ";
+            std::cin >> buffer;
+            FindSentenceByLastWord(document, buffer, fout);
+            break;
+        }
+        case 5: {
+            std::cout << "Exiting...\n";
+            DeleteDocument(document);
+            fout.close();
+            return 0;
+        }
+        default:
+        {
+            std::cout << "Invalid option!\n";
+            break;
+        }
+        }
+    } while (12);
 
     DeleteDocument(document);
-
-    std::cout << "Processing completed. Results saved to output.txt" << std::endl;
+    fout.close();
     return 0;
 }

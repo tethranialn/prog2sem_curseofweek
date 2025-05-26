@@ -119,3 +119,114 @@ void PrintOperationResult(const Form_V& doc, const char* targetWord, const char*
     out << "\n=== Modified Document ===\n";
     PrintDocument(doc, out);
 }
+void RemoveSpecificPunctuation(Form_V& doc, int sentenceNum, char symbol, std::ostream& out) {
+    bool found = false;
+    for (EL_V* level = doc.head; level; level = level->next) {
+        EL_Stroka* prev = nullptr;
+        EL_Stroka* current = level->line.head;
+        while (current) {
+            bool shouldDelete = false;
+            if (current->sentence_id == sentenceNum) {
+                if (current->type == PUNCTUATION && current->content.punctuation.symbol == symbol) {
+                    shouldDelete = true;
+                }
+                else if (current->type == COMMA && symbol == ',') {
+                    shouldDelete = true;
+                }
+            }
+
+            if (shouldDelete) {
+                // Удаляем блок
+                if (prev) {
+                    prev->next = current->next;
+                }
+                else {
+                    level->line.head = current->next;
+                }
+                if (current == level->line.tail) {
+                    level->line.tail = prev;
+                }
+                EL_Stroka* temp = current;
+                current = current->next;
+                delete temp;
+                level->line.count--;
+                found = true;
+            }
+            else {
+                prev = current;
+                current = current->next;
+            }
+        }
+    }
+    out << "\n=== Removed '" << symbol << "' ===\n";
+    PrintDocument(doc, out);
+    if (!found) out << "Symbol not found in sentence " << sentenceNum << "!\n";
+}
+// Удаление всех знаков пунктуации
+void RemoveAllPunctuation(Form_V& doc, int sentenceNum, std::ostream& out) {
+    int count = 0;
+    for (EL_V* level = doc.head; level; level = level->next) {
+        EL_Stroka* prev = nullptr;
+        EL_Stroka* current = level->line.head;
+        while (current) {
+            if (current->sentence_id == sentenceNum &&
+                (current->type == PUNCTUATION || current->type == COMMA)) {
+
+                // Удаление блока
+                if (prev) prev->next = current->next;
+                else level->line.head = current->next;
+
+                if (current == level->line.tail) level->line.tail = prev;
+
+                EL_Stroka* temp = current;
+                current = current->next;
+                delete temp;
+                level->line.count--;
+                count++;
+            }
+            else {
+                prev = current;
+                current = current->next;
+            }
+        }
+    }
+    out << "\n=== Remove All Punctuation ===\n";
+    PrintDocument(doc, out);
+    out << "Removed: " << count << " symbols\n";
+}
+
+// Поиск предложения по последнему слову
+void FindSentenceByLastWord(const Form_V& doc, const char* word, std::ostream& out) {
+    out << "\n=== Sentences ending with \"" << word << "\" ===\n";
+    bool found = false;
+    for (EL_V* level = doc.head; level; level = level->next) {
+        EL_Stroka* block = level->line.head;
+        int currentSentence = -1;
+        char lastWord[256] = { 0 };
+
+        while (block) {
+            if (block->sentence_id != currentSentence) {
+                // Проверка предыдущего предложения
+                if (currentSentence != -1 && CompareStrings(lastWord, word) == 0) {
+                    out << "Sentence " << currentSentence << ":\n";
+                    PrintDocument(doc, out);
+                    found = true;
+                }
+                currentSentence = block->sentence_id;
+                lastWord[0] = '\0';
+            }
+
+            // Сбор слова
+            if (block->type == LETTERS && !block->content.letters.is_word_part) {
+                EL_Stroka* part = block;
+                while (part) {
+                    strncat_s(lastWord, part->content.letters.data, part->content.letters.size);
+                    part = part->next_word_block;
+                }
+            }
+
+            block = block->next;
+        }
+    }
+    if (!found) out << "No matches found.\n";
+}
