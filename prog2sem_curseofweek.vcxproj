@@ -132,6 +132,7 @@
     <ClCompile Include="list.cpp" />
     <ClCompile Include="listFunc.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Operate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
@@ -142,6 +143,7 @@
     <ClInclude Include="InpS.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="listFunc.h" />
+    <ClInclude Include="Operate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

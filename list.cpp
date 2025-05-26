@@ -15,7 +15,7 @@ void InitBlock(EL_Stroka*& block, BlockType type) {
         block->content.letters.is_word_part = false;
         break;
     case SPACES:
-        block->content.spaces.count = 1;
+        block->content.spaces.count = 0;
         break;
     case PUNCTUATION:
         block->content.punctuation.symbol = '\0';

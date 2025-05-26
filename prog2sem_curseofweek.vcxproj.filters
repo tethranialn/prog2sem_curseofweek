@@ -30,6 +30,9 @@
     <ClCompile Include="InpS.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Operate.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TASK.txt" />
@@ -46,6 +49,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="InpS.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Operate.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

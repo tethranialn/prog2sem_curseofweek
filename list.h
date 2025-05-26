@@ -9,7 +9,7 @@ struct EL_Stroka {
     BlockType type;
     union {
         struct {
-            char data[6];  
+            char data[6];
             int size;
             bool is_word_part;
         } letters;

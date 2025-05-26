@@ -1,5 +1,6 @@
 #include "InpS.h"
 #include "Del.h"
+#include "Operate.h"
 #include <fstream>
 #include <iostream>
 
@@ -14,6 +15,19 @@ int main() {
     }
 
     PrintDocument(document, fout);
+    int sentenceNum;
+    char targetWord[100], newWord[100];
+
+    std::cout << "Enter sentence number: ";
+    std::cin >> sentenceNum;
+    std::cout << "Enter target word: ";
+    std::cin >> targetWord;
+    std::cout << "Enter new word: ";
+    std::cin >> newWord;
+
+    InsertWord(document, targetWord, newWord, sentenceNum);
+
+    PrintOperationResult(document, targetWord, newWord, sentenceNum, fout);
     fout.close();
 
     DeleteDocument(document);

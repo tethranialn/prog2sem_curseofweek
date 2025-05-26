@@ -11,6 +11,8 @@ BlockType DetermineType(char c) {
     if (IsLetter(c)) return LETTERS;
     if (c == ' ') return SPACES;
     if (c == ',') return COMMA;
+    if (c == ';') return COMMA;
+    if (c == ':') return COMMA;
     return PUNCTUATION;
 }
 
@@ -28,11 +30,12 @@ void ReadDocument(Form_V& doc, const char* filename) {
 
     EL_Stroka* current_block = nullptr;
     EL_Stroka* current_word = nullptr;
-    int current_sentence = 1;  // Исправлено: начинаем с 1
+    int current_sentence = 1;
     bool in_sentence = false;
     char c;
 
     while (fin.get(c)) {
+        if (c == '\r') continue; 
         if (c == '\n') {
             if (current_level->line.head) {
                 EL_V* new_level = new EL_V;
@@ -57,7 +60,7 @@ void ReadDocument(Form_V& doc, const char* filename) {
 
         if (!current_block) {
             InitBlock(current_block, type);
-            current_block->sentence_id = current_sentence; // Актуальный ID
+            current_block->sentence_id = current_sentence;
             AddBlockToLine(current_level->line, current_block);
         }
 
@@ -67,7 +70,7 @@ void ReadDocument(Form_V& doc, const char* filename) {
                 if (current_word) {
                     InitBlock(current_block, LETTERS);
                     current_block->content.letters.is_word_part = true;
-                    current_block->sentence_id = current_sentence; // Исправлено
+                    current_block->sentence_id = current_sentence;
                     current_word->next_word_block = current_block;
                     AddBlockToLine(current_level->line, current_block);
                 }
@@ -86,7 +89,9 @@ void ReadDocument(Form_V& doc, const char* filename) {
             break;
         }
         case SPACES:
-            current_block->content.spaces.count++;
+            if (current_block->type == SPACES) {
+                current_block->content.spaces.count++; 
+            }
             break;
         case COMMA:
             current_block->content.comma.comma = ',';
@@ -94,7 +99,7 @@ void ReadDocument(Form_V& doc, const char* filename) {
         case PUNCTUATION:
             current_block->content.punctuation.symbol = c;
             if (in_sentence) {
-                current_sentence++; // Увеличиваем ТОЛЬКО здесь
+                current_sentence++;
                 in_sentence = false;
             }
             break;
@@ -128,10 +133,10 @@ void PrintDocument(const Form_V& doc, std::ostream& out) {
                 break;
             }
             case SPACES:
-                out << "[SPACE x" << block->content.spaces.count - 1 << "]";
+                out << "[SPACE x" << block->content.spaces.count << "]";
                 break;
             case COMMA:
-                out << "[COMMA]";
+                out << "[COMMA: '" << block->content.comma.comma << "']";
                 break;
             case PUNCTUATION:
                 out << "[PUNCT: '" << block->content.punctuation.symbol << "']";
