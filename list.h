@@ -1,55 +1,57 @@
-#pragma once
 #ifndef LIST_H
 #define LIST_H
-#include <fstream>
 
-enum BlockType { LETTERS, SPACES, PUNCTUATION, COMMA };
+enum BlockType { LETTERS, SPACES, COMMA, PUNCTUATION };
+
+struct Letters {
+    char data[6];
+    int size;
+    bool is_word_part;
+};
+
+struct Spaces {
+    int count;
+};
+
+struct Comma {
+    char comma;
+};
+
+struct Punctuation {
+    char symbol;
+};
 
 struct EL_Stroka {
     BlockType type;
     union {
-        struct {
-            char data[6];
-            int size;
-            bool is_word_part;
-        } letters;
-        struct {
-            int count;
-        } spaces;
-        struct {
-            char symbol;
-        } punctuation;
-        struct {
-            char comma;
-        } comma;
+        Letters letters;
+        Spaces spaces;
+        Comma comma;
+        Punctuation punctuation;
     } content;
-    EL_Stroka* next_word_block;
-    EL_Stroka* next;
     int sentence_id;
+    EL_Stroka* next;
+    EL_Stroka* next_word_block;
 };
 
-struct Form_Stroka {
+struct Line {
     EL_Stroka* head;
-    EL_Stroka* tail;
-    int count;
 };
 
 struct EL_V {
-    Form_Stroka line;
+    Line line;
     EL_V* next;
 };
 
 struct Form_V {
     EL_V* head;
-    EL_V* tail;
     int total_sentences;
 };
 
-void InitBlock(EL_Stroka*& block, BlockType type);
-void InitLine(Form_Stroka& line);
-void InitLevel(EL_V*& level);
 void InitDocument(Form_V& doc);
-void AddBlockToLine(Form_Stroka& line, EL_Stroka* block);
+void InitLevel(EL_V* level);
 void AddLevelToDoc(Form_V& doc, EL_V* level);
+void InitBlock(EL_Stroka*& block, BlockType type);
+void AddBlockToLine(Line& line, EL_Stroka* block);
 
 #endif

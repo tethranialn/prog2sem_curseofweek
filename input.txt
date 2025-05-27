@@ -1,3 +1,4 @@
-The text       is a sequence; of separate sentences: containing words and
+The text       is a sequence; of separate sentences: containing words and 
 punctuation marks! Convert text according to the sequence of editing commands,
-                     which should allow you to insert, delete, and replace specified words in certain sentences. yes?
+ which should allow you to insert, delete, and replace specified words in certain sentences. yes?
+Someone found two marks.

@@ -1,232 +1,223 @@
 #include "Operate.h"
+#include "list.h"
 #include "listFunc.h"
-#include <iostream>
+#include "inpS.h"
 #include <fstream>
-
-static EL_V* FindSentenceLevel(Form_V& doc, int sentenceNum, EL_Stroka** outBlock) {
-    for (EL_V* level = doc.head; level; level = level->next) {
-        for (EL_Stroka* block = level->line.head; block; block = block->next) {
-            if (block->sentence_id == sentenceNum && block->type == LETTERS && !block->content.letters.is_word_part) {
-                *outBlock = block;
-                return level;
-            }
-        }
-    }
-    return nullptr;
-}
-
-static void GetFullWord(const EL_Stroka* block, char* buffer) {
-    int idx = 0;
-    while (block && block->type == LETTERS) {
-        for (int i = 0; i < block->content.letters.size; i++) {
-            buffer[idx++] = block->content.letters.data[i];
-        }
-        block = block->next_word_block;
-    }
-    buffer[idx] = '\0';
-}
+#include <iostream>
 
 void InsertWord(Form_V& doc, const char* targetWord, const char* newWord, int sentenceNum) {
-    EL_Stroka* sentenceStart = nullptr;
-    EL_V* targetLevel = FindSentenceLevel(doc, sentenceNum, &sentenceStart);
+    if (!targetWord || !newWord || !doc.head) return;
 
-    if (!targetLevel || !sentenceStart) {
-        std::cerr << "Error: Sentence " << sentenceNum << " not found!" << std::endl;
-        return;
-    }
+    int cmpResult = 0;
+    bool insertBeforeAll = false;
+    CompareStrings(targetWord, "all", cmpResult);
+    if (cmpResult == 0) insertBeforeAll = true;
 
-    EL_Stroka* prevBlock = nullptr;
-    EL_Stroka* currentBlock = targetLevel->line.head;
-    bool wordFound = false;
-
-    while (currentBlock) {
-        if (currentBlock->type == LETTERS && !currentBlock->content.letters.is_word_part) {
-            char currentWord[256];
-            GetFullWord(currentBlock, currentWord);
-            if (CompareStrings(currentWord, targetWord) == 0) {
-                wordFound = true;
-                break;
-            }
+    EL_V* level = doc.head;
+    while (level) {
+        if (!level->line.head) {
+            level = level->next;
+            continue;
         }
-        prevBlock = currentBlock;
-        currentBlock = currentBlock->next;
-    }
 
-    if (!wordFound) {
-        std::cerr << "Error: Word '" << targetWord << "' not found in sentence " << sentenceNum << "!" << std::endl;
-        return;
-    }
-
-    EL_Stroka* spaceAfter;
-    InitBlock(spaceAfter, SPACES);
-    spaceAfter->content.spaces.count = 1;
-    spaceAfter->sentence_id = sentenceNum;
-
-    EL_Stroka* firstNewBlock = nullptr;
-    EL_Stroka* lastNewBlock = nullptr;
-    EL_Stroka* currentWordPart = nullptr;
-    int len = 0;
-    while (newWord[len]) len++;
-
-    for (int i = 0; i < len; i += 5) {
-        EL_Stroka* part;
-        InitBlock(part, LETTERS);
-        part->sentence_id = sentenceNum;
-        part->content.letters.is_word_part = (i != 0);
-        part->content.letters.size = 0;
-        for (int j = 0; j < 5 && newWord[i + j]; j++) {
-            part->content.letters.data[j] = newWord[i + j];
-            part->content.letters.size++;
-        }
-        part->content.letters.data[part->content.letters.size] = '\0';
-
-        if (!firstNewBlock) {
-            firstNewBlock = part;
-            currentWordPart = part;
-        }
-        else {
-            lastNewBlock->next = part;              
-            currentWordPart->next_word_block = part; 
-            currentWordPart = part;
-        }
-        lastNewBlock = part;
-    }
-
-    if (lastNewBlock) {
-        lastNewBlock->next = spaceAfter;
-    }
-    else {
-        firstNewBlock = spaceAfter; 
-    }
-    spaceAfter->next = currentBlock;
-
-    if (prevBlock) {
-        prevBlock->next = firstNewBlock;
-    }
-    else {
-        targetLevel->line.head = firstNewBlock;
-    }
-
-    targetLevel->line.count += (len / 5 + (len % 5 ? 1 : 0)) + 1; 
-}
-void PrintOperationResult(const Form_V& doc, const char* targetWord, const char* newWord, int sentenceNum, std::ostream& out) {
-    
-    out << "\n=== Operation Details ===\n";
-    out << "Target sentence: " << sentenceNum << "\n";
-    out << "Target word: " << targetWord << "\n";
-    out << "New word: " << newWord << "\n";
-
-    out << "\n=== Modified Document ===\n";
-    PrintDocument(doc, out);
-}
-void RemoveSpecificPunctuation(Form_V& doc, int sentenceNum, char symbol, std::ostream& out) {
-    bool found = false;
-    for (EL_V* level = doc.head; level; level = level->next) {
-        EL_Stroka* prev = nullptr;
-        EL_Stroka* current = level->line.head;
-        while (current) {
-            bool shouldDelete = false;
-            if (current->sentence_id == sentenceNum) {
-                if (current->type == PUNCTUATION && current->content.punctuation.symbol == symbol) {
-                    shouldDelete = true;
-                }
-                else if (current->type == COMMA && symbol == ',') {
-                    shouldDelete = true;
-                }
-            }
-
-            if (shouldDelete) {
-                // Удаляем блок
-                if (prev) {
-                    prev->next = current->next;
-                }
-                else {
-                    level->line.head = current->next;
-                }
-                if (current == level->line.tail) {
-                    level->line.tail = prev;
-                }
-                EL_Stroka* temp = current;
-                current = current->next;
-                delete temp;
-                level->line.count--;
-                found = true;
-            }
-            else {
-                prev = current;
-                current = current->next;
-            }
-        }
-    }
-    out << "\n=== Removed '" << symbol << "' ===\n";
-    PrintDocument(doc, out);
-    if (!found) out << "Symbol not found in sentence " << sentenceNum << "!\n";
-}
-// Удаление всех знаков пунктуации
-void RemoveAllPunctuation(Form_V& doc, int sentenceNum, std::ostream& out) {
-    int count = 0;
-    for (EL_V* level = doc.head; level; level = level->next) {
-        EL_Stroka* prev = nullptr;
-        EL_Stroka* current = level->line.head;
-        while (current) {
-            if (current->sentence_id == sentenceNum &&
-                (current->type == PUNCTUATION || current->type == COMMA)) {
-
-                // Удаление блока
-                if (prev) prev->next = current->next;
-                else level->line.head = current->next;
-
-                if (current == level->line.tail) level->line.tail = prev;
-
-                EL_Stroka* temp = current;
-                current = current->next;
-                delete temp;
-                level->line.count--;
-                count++;
-            }
-            else {
-                prev = current;
-                current = current->next;
-            }
-        }
-    }
-    out << "\n=== Remove All Punctuation ===\n";
-    PrintDocument(doc, out);
-    out << "Removed: " << count << " symbols\n";
-}
-
-// Поиск предложения по последнему слову
-void FindSentenceByLastWord(const Form_V& doc, const char* word, std::ostream& out) {
-    out << "\n=== Sentences ending with \"" << word << "\" ===\n";
-    bool found = false;
-    for (EL_V* level = doc.head; level; level = level->next) {
         EL_Stroka* block = level->line.head;
-        int currentSentence = -1;
-        char lastWord[256] = { 0 };
+        EL_Stroka* prev = nullptr;
+        bool inserted = false;
 
         while (block) {
-            if (block->sentence_id != currentSentence) {
-                // Проверка предыдущего предложения
-                if (currentSentence != -1 && CompareStrings(lastWord, word) == 0) {
-                    out << "Sentence " << currentSentence << ":\n";
-                    PrintDocument(doc, out);
-                    found = true;
-                }
-                currentSentence = block->sentence_id;
-                lastWord[0] = '\0';
+            EL_Stroka* nextBlock = block ? block->next : nullptr;
+            if (!block || block->sentence_id != sentenceNum) {
+                prev = block;
+                block = nextBlock;
+                continue;
             }
 
-            // Сбор слова
             if (block->type == LETTERS && !block->content.letters.is_word_part) {
-                EL_Stroka* part = block;
-                while (part) {
-                    strncat_s(lastWord, part->content.letters.data, part->content.letters.size);
-                    part = part->next_word_block;
+                char currentWord[256] = { 0 };
+                GetFullWord(block, currentWord);
+
+                cmpResult = 0;
+                CompareStrings(currentWord, targetWord, cmpResult);
+                if (insertBeforeAll || cmpResult == 0) {
+                    EL_Stroka* newBlock = nullptr;
+                    InitBlock(newBlock, LETTERS);
+                    if (!newBlock) {
+                        std::cerr << "Error: Failed to allocate memory for new word block.\n";
+                        return;
+                    }
+                    newBlock->sentence_id = sentenceNum;
+
+                    int i = 0;
+                    while (newWord[i] && i < 5) {
+                        newBlock->content.letters.data[i] = newWord[i];
+                        newBlock->content.letters.size++;
+                        i++;
+                    }
+                    newBlock->content.letters.data[i] = '\0';
+
+                    const char* remaining = newWord + i;
+                    EL_Stroka* currentPart = newBlock;
+                    while (*remaining) {
+                        EL_Stroka* partBlock = nullptr;
+                        InitBlock(partBlock, LETTERS);
+                        if (!partBlock) {
+                            std::cerr << "Error: Failed to allocate memory for word part block.\n";
+                            EL_Stroka* temp = newBlock;
+                            while (temp) {
+                                EL_Stroka* next = temp->next_word_block;
+                                delete temp;
+                                temp = next;
+                            }
+                            return;
+                        }
+                        partBlock->content.letters.is_word_part = true;
+                        partBlock->sentence_id = sentenceNum;
+                        i = 0;
+                        while (*remaining && i < 5) {
+                            partBlock->content.letters.data[i] = *remaining;
+                            partBlock->content.letters.size++;
+                            remaining++;
+                            i++;
+                        }
+                        partBlock->content.letters.data[i] = '\0';
+                        currentPart->next_word_block = partBlock;
+                        currentPart = partBlock;
+                    }
+
+                    EL_Stroka* spaceBefore = nullptr;
+                    InitBlock(spaceBefore, SPACES);
+                    if (!spaceBefore) {
+                        std::cerr << "Error: Failed to allocate memory for space before block.\n";
+                        EL_Stroka* temp = newBlock;
+                        while (temp) {
+                            EL_Stroka* next = temp->next_word_block;
+                            delete temp;
+                            temp = next;
+                        }
+                        return;
+                    }
+                    spaceBefore->sentence_id = sentenceNum;
+                    spaceBefore->content.spaces.count = 1;
+
+                    EL_Stroka* spaceAfter = nullptr;
+                    InitBlock(spaceAfter, SPACES);
+                    if (!spaceAfter) {
+                        std::cerr << "Error: Failed to allocate memory for space after block.\n";
+                        EL_Stroka* temp = newBlock;
+                        while (temp) {
+                            EL_Stroka* next = temp->next_word_block;
+                            delete temp;
+                            temp = next;
+                        }
+                        delete spaceBefore;
+                        return;
+                    }
+                    spaceAfter->sentence_id = sentenceNum;
+                    spaceAfter->content.spaces.count = 1;
+
+                    spaceBefore->next = newBlock;
+                    newBlock->next = spaceAfter;
+                    spaceAfter->next = block;
+
+                    if (prev) {
+                        prev->next = spaceBefore;
+                    }
+                    else {
+                        level->line.head = spaceBefore;
+                    }
+                    prev = spaceAfter;
+                    inserted = true;
+
+                    if (!insertBeforeAll) {
+                        block = nextBlock;
+                        break;
+                    }
+                }
+                else {
+                    prev = block;
                 }
             }
+            else {
+                prev = block;
+            }
+            block = nextBlock;
+        }
 
-            block = block->next;
+        if (inserted && !insertBeforeAll) break;
+        level = level->next;
+    }
+}
+
+void RemoveSpecificPunctuation(Form_V& doc, int sentenceNum, char symbol, std::ostream& out) {
+    for (EL_V* level = doc.head; level; level = level->next) {
+        if (!level || !level->line.head) continue;
+        EL_Stroka* block = level->line.head;
+        EL_Stroka* prev = nullptr;
+
+        while (block) {
+            EL_Stroka* nextBlock = block->next;
+            if (block->sentence_id != sentenceNum) {
+                prev = block;
+                block = nextBlock;
+                continue;
+            }
+
+            if ((block->type == PUNCTUATION && block->content.punctuation.symbol == symbol) ||
+                (block->type == COMMA && block->content.comma.comma == symbol)) {
+                if (prev) {
+                    prev->next = block->next;
+                }
+                else {
+                    level->line.head = block->next;
+                }
+                delete block;
+                block = nextBlock;
+                continue;
+            }
+            prev = block;
+            block = nextBlock;
         }
     }
-    if (!found) out << "No matches found.\n";
+    out << "\n=== Remove Specific Punctuation Operation ===\n";
+    out << "Removed symbol: " << symbol << "\nSentence: " << sentenceNum << "\n";
+    PrintDocument(doc, out);
+}
+
+void RemoveAllPunctuation(Form_V& doc, int sentenceNum, std::ostream& out) {
+    for (EL_V* level = doc.head; level; level = level->next) {
+        if (!level || !level->line.head) continue;
+        EL_Stroka* block = level->line.head;
+        EL_Stroka* prev = nullptr;
+
+        while (block) {
+            EL_Stroka* nextBlock = block->next;
+            if (block->sentence_id != sentenceNum) {
+                prev = block;
+                block = nextBlock;
+                continue;
+            }
+
+            if (block->type == PUNCTUATION || block->type == COMMA) {
+                if (prev) {
+                    prev->next = block->next;
+                }
+                else {
+                    level->line.head = block->next;
+                }
+                delete block;
+                block = nextBlock;
+                continue;
+            }
+            prev = block;
+            block = nextBlock;
+        }
+    }
+    out << "\n=== Remove All Punctuation Operation ===\n";
+    out << "Sentence: " << sentenceNum << "\n";
+    PrintDocument(doc, out);
+}
+
+void PrintOperationResult(const Form_V& doc, const char* targetWord, const char* newWord, int sentenceNum, std::ostream& out) {
+    out << "Inserted word \"" << newWord << "\" before \"" << targetWord << "\" in sentence " << sentenceNum << "\n";
+    PrintDocument(doc, out);
 }

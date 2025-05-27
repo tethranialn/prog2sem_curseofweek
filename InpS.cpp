@@ -1,112 +1,141 @@
+#include "Del.h"
 #include "InpS.h"
 #include "list.h"
 #include <fstream>
 #include <iostream>
-
-bool IsLetter(char c) {
-    return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
-}
-
-BlockType DetermineType(char c) {
-    if (IsLetter(c)) return LETTERS;
-    if (c == ' ') return SPACES;
-    if (c == ',') return COMMA;
-    if (c == ';') return COMMA;
-    if (c == ':') return COMMA;
-    return PUNCTUATION;
-}
+#include <cstdlib>
 
 void ReadDocument(Form_V& doc, const char* filename) {
-    std::ifstream fin(filename);
-    if (!fin) {
-        std::cerr << "Error opening file: " << filename << std::endl;
-        return;
-    }
-
     InitDocument(doc);
-    EL_V* current_level = new EL_V;
-    InitLevel(current_level);
-    AddLevelToDoc(doc, current_level);
+    std::ifstream in(filename);
+    if (!in.is_open()) {
+        std::cerr << "Error: Could not open input file '" << filename << "'. Please ensure the file exists in the same directory as the executable.\n";
+        std::exit(1);
+    }
+    std::cout << "Successfully opened input file: " << filename << "\n";
 
-    EL_Stroka* current_block = nullptr;
-    EL_Stroka* current_word = nullptr;
-    int current_sentence = 1;
-    bool in_sentence = false;
+    EL_V* currentLevel = new EL_V;
+    if (!currentLevel) {
+        std::cerr << "Error: Failed to allocate memory for document level.\n";
+        in.close();
+        std::exit(1);
+    }
+    InitLevel(currentLevel);
+    AddLevelToDoc(doc, currentLevel);
+    int sentenceId = 0;
     char c;
+    bool inWord = false;
+    EL_Stroka* currentWordBlock = nullptr;
 
-    while (fin.get(c)) {
-        if (c == '\r') continue; 
+    while (in.get(c)) {
         if (c == '\n') {
-            if (current_level->line.head) {
-                EL_V* new_level = new EL_V;
-                InitLevel(new_level);
-                AddLevelToDoc(doc, new_level);
-                current_level = new_level;
+            EL_V* newLevel = new EL_V;
+            if (!newLevel) {
+                std::cerr << "Error: Failed to allocate memory for new document level.\n";
+                in.close();
+                DeleteDocument(doc);
+                std::exit(1);
             }
-            current_block = nullptr;
-            current_word = nullptr;
+            InitLevel(newLevel);
+            AddLevelToDoc(doc, newLevel);
+            currentLevel = newLevel;
             continue;
         }
 
-        BlockType type = DetermineType(c);
-
-        if (type != LETTERS) {
-            current_word = nullptr;
-        }
-
-        if (current_block && current_block->type != type) {
-            current_block = nullptr;
-        }
-
-        if (!current_block) {
-            InitBlock(current_block, type);
-            current_block->sentence_id = current_sentence;
-            AddBlockToLine(current_level->line, current_block);
-        }
-
-        switch (type) {
-        case LETTERS: {
-            if (!current_word || current_word->content.letters.size >= 5) {
-                if (current_word) {
-                    InitBlock(current_block, LETTERS);
-                    current_block->content.letters.is_word_part = true;
-                    current_block->sentence_id = current_sentence;
-                    current_word->next_word_block = current_block;
-                    AddBlockToLine(current_level->line, current_block);
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+            if (!inWord) {
+                EL_Stroka* block = nullptr;
+                InitBlock(block, LETTERS);
+                if (!block) {
+                    std::cerr << "Error: Failed to allocate memory for letter block.\n";
+                    in.close();
+                    DeleteDocument(doc);
+                    std::exit(1);
                 }
-                current_word = current_block;
+                block->sentence_id = sentenceId;
+                AddBlockToLine(currentLevel->line, block);
+                currentWordBlock = block;
+                inWord = true;
             }
 
-            if (current_word->content.letters.size < 5) {
-                current_word->content.letters.data[current_word->content.letters.size++] = c;
-                current_word->content.letters.data[current_word->content.letters.size] = '\0';
+            int pos = currentWordBlock->content.letters.size;
+            if (pos < 5) {
+                currentWordBlock->content.letters.data[pos] = c;
+                currentWordBlock->content.letters.size++;
+                currentWordBlock->content.letters.data[pos + 1] = '\0';
             }
-
-            if (!in_sentence) {
-                doc.total_sentences++;
-                in_sentence = true;
+            else {
+                EL_Stroka* partBlock = nullptr;
+                InitBlock(partBlock, LETTERS);
+                if (!partBlock) {
+                    std::cerr << "Error: Failed to allocate memory for letter part block.\n";
+                    in.close();
+                    DeleteDocument(doc);
+                    std::exit(1);
+                }
+                partBlock->content.letters.is_word_part = true;
+                partBlock->sentence_id = sentenceId;
+                partBlock->content.letters.data[0] = c;
+                partBlock->content.letters.size = 1;
+                partBlock->content.letters.data[1] = '\0';
+                currentWordBlock->next_word_block = partBlock;
+                currentWordBlock = partBlock;
             }
-            break;
         }
-        case SPACES:
-            if (current_block->type == SPACES) {
-                current_block->content.spaces.count++; 
+        else {
+            inWord = false;
+            currentWordBlock = nullptr;
+
+            if (c == ' ') {
+                EL_Stroka* block = nullptr;
+                InitBlock(block, SPACES);
+                if (!block) {
+                    std::cerr << "Error: Failed to allocate memory for space block.\n";
+                    in.close();
+                    DeleteDocument(doc);
+                    std::exit(1);
+                }
+                block->sentence_id = sentenceId;
+                block->content.spaces.count = 1;
+                AddBlockToLine(currentLevel->line, block);
+                int spaceCount = 1;
+                while (in.peek() == ' ') {
+                    in.get(c);
+                    spaceCount++;
+                }
+                block->content.spaces.count = spaceCount;
             }
-            break;
-        case COMMA:
-            current_block->content.comma.comma = ',';
-            break;
-        case PUNCTUATION:
-            current_block->content.punctuation.symbol = c;
-            if (in_sentence) {
-                current_sentence++;
-                in_sentence = false;
+            else if (c == ',' || c == ';' || c == ':') {
+                EL_Stroka* block = nullptr;
+                InitBlock(block, COMMA);
+                if (!block) {
+                    std::cerr << "Error: Failed to allocate memory for comma block.\n";
+                    in.close();
+                    DeleteDocument(doc);
+                    std::exit(1);
+                }
+                block->sentence_id = sentenceId;
+                block->content.comma.comma = c;
+                AddBlockToLine(currentLevel->line, block);
             }
-            break;
+            else if (c == '.' || c == '!' || c == '?') {
+                EL_Stroka* block = nullptr;
+                InitBlock(block, PUNCTUATION);
+                if (!block) {
+                    std::cerr << "Error: Failed to allocate memory for punctuation block.\n";
+                    in.close();
+                    DeleteDocument(doc);
+                    std::exit(1);
+                }
+                block->sentence_id = sentenceId;
+                block->content.punctuation.symbol = c;
+                AddBlockToLine(currentLevel->line, block);
+                sentenceId++;
+                doc.total_sentences = sentenceId;
+            }
         }
     }
-
-    fin.close();
+    in.close();
 }
 
 void PrintDocument(const Form_V& doc, std::ostream& out) {
@@ -149,4 +178,41 @@ void PrintDocument(const Form_V& doc, std::ostream& out) {
     }
     out << "Total sentences: " << doc.total_sentences << "\n";
     out << "====================\n\n";
+}
+
+void PrintDocumentConcise(const Form_V& doc, std::ostream& out) {
+    if (!doc.head) {
+        out << "Document is empty.\n";
+        return;
+    }
+    EL_V* level = doc.head;
+    while (level) {
+        if (level->line.head) {
+            EL_Stroka* block = level->line.head;
+            while (block) {
+                if (block->type == LETTERS) {
+                    out << block->content.letters.data;
+                    EL_Stroka* part = block->next_word_block;
+                    while (part) {
+                        out << part->content.letters.data;
+                        part = part->next_word_block;
+                    }
+                }
+                else if (block->type == SPACES) {
+                    for (int i = 0; i < block->content.spaces.count; i++) {
+                        out << ' ';
+                    }
+                }
+                else if (block->type == COMMA) {
+                    out << block->content.comma.comma;
+                }
+                else if (block->type == PUNCTUATION) {
+                    out << block->content.punctuation.symbol;
+                }
+                block = block->next;
+            }
+            out << "\n";
+        }
+        level = level->next;
+    }
 }
