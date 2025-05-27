@@ -136,7 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
-    <Text Include="TASK.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Del.h" />

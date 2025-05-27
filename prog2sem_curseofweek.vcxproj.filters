@@ -35,7 +35,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="TASK.txt" />
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>

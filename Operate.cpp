@@ -22,7 +22,6 @@ void InsertWord(Form_V& doc, const char* targetWord, const char* newWord, int se
 
         EL_Stroka* block = level->line.head;
         EL_Stroka* prev = nullptr;
-        bool inserted = false;
 
         while (block) {
             EL_Stroka* nextBlock = block ? block->next : nullptr;
@@ -36,9 +35,17 @@ void InsertWord(Form_V& doc, const char* targetWord, const char* newWord, int se
                 char currentWord[256] = { 0 };
                 GetFullWord(block, currentWord);
 
-                cmpResult = 0;
-                CompareStrings(currentWord, targetWord, cmpResult);
-                if (insertBeforeAll || cmpResult == 0) {
+                bool shouldInsert = false;
+                if (insertBeforeAll) {
+                    shouldInsert = true;
+                }
+                else {
+                    if (IsSubstring(currentWord, targetWord)) {
+                        shouldInsert = true;
+                    }
+                }
+
+                if (shouldInsert) {
                     EL_Stroka* newBlock = nullptr;
                     InitBlock(newBlock, LETTERS);
                     if (!newBlock) {
@@ -109,12 +116,6 @@ void InsertWord(Form_V& doc, const char* targetWord, const char* newWord, int se
                         level->line.head = newBlock;
                     }
                     prev = spaceAfter;
-                    inserted = true;
-
-                    if (!insertBeforeAll) {
-                        block = nextBlock;
-                        break;
-                    }
                 }
                 else {
                     prev = block;
@@ -125,11 +126,11 @@ void InsertWord(Form_V& doc, const char* targetWord, const char* newWord, int se
             }
             block = nextBlock;
         }
-
-        if (inserted && !insertBeforeAll) break;
         level = level->next;
     }
-}void RemoveSpecificPunctuation(Form_V& doc, int sentenceNum, char symbol, std::ostream& out) {
+}
+
+void RemoveSpecificPunctuation(Form_V& doc, int sentenceNum, char symbol, std::ostream& out) {
     for (EL_V* level = doc.head; level; level = level->next) {
         if (!level || !level->line.head) continue;
         EL_Stroka* block = level->line.head;
@@ -163,6 +164,7 @@ void InsertWord(Form_V& doc, const char* targetWord, const char* newWord, int se
     out << "Removed symbol: " << symbol << "\nSentence: " << sentenceNum << "\n";
     PrintDocument(doc, out);
 }
+
 void RemoveAllPunctuation(Form_V& doc, int sentenceNum, std::ostream& out) {
     for (EL_V* level = doc.head; level; level = level->next) {
         if (!level || !level->line.head) continue;
@@ -196,6 +198,7 @@ void RemoveAllPunctuation(Form_V& doc, int sentenceNum, std::ostream& out) {
     out << "Sentence: " << sentenceNum << "\n";
     PrintDocument(doc, out);
 }
+
 void PrintOperationResult(const Form_V& doc, const char* targetWord, const char* newWord, int sentenceNum, std::ostream& out) {
     out << "Inserted word \"" << newWord << "\" before \"" << targetWord << "\" in sentence " << sentenceNum << "\n";
     PrintDocument(doc, out);

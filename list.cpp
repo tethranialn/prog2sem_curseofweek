@@ -7,7 +7,6 @@ void InitDocument(Form_V& doc) {
 
 void InitLevel(EL_V* level) {
     if (!level) {
-        // This should not happen as level is passed as a pointer to be initialized
         return;
     }
     level->line.head = nullptr;

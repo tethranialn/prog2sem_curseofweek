@@ -4,15 +4,22 @@ punctuation marks! Convert text according to the sequence of editing commands,
  which should allow you to insert, delete, and replace specified words in certain sentences. yes?
 Someone found two marks.
 
-=== Sentences ending with word containing "es" ===
-Sentence 1:  Convert text according to the sequence of editing commands, which should allow you to insert, delete, and replace specified words in certain sentences.
+=== Sentences ending with word "marks" ===
+Sentence 0: The text       is a sequence; of separate sentences: containing words and punctuation marks!
+Sentence 3: Someone found two marks.
+
+=== Sentences ending with word "yes" ===
 Sentence 2:  yes?
 
-=== Sentences ending with word containing "ence" ===
+=== Sentences ending with word "sentences" ===
 Sentence 1:  Convert text according to the sequence of editing commands, which should allow you to insert, delete, and replace specified words in certain sentences.
 
+=== Sentences ending with word "marks" ===
+Sentence 0: The text       is KOOKOKOO a sequence; of KOOKOKOO separate sentences: KOOKOKOO containing words KOOKOKOO and KOOKOKOO punctuation KOOKOKOO NO marks!
+Sentence 3: YES Someone YES found YES two marks.
+
 === Final Document ===
-The text       is a sequence; of separate sentences: containing words and 
-punctuation marks! Convert text according to the sequence of editing commands,
- which should allow you to insert, delete, and replace specified words in certain sentences. yes?
-Someone found two marks.
+The text       is KOOKOKOO a sequence of KOOKOKOO separate sentences KOOKOKOO containing words KOOKOKOO and 
+KOOKOKOO punctuation KOOKOKOO NO marks ALL Convert ALL text ALL according ALL to ALL the ALL sequence ALL of ALL editing ALL commands
+ ALL which ALL should ALL allow ALL you ALL to ALL insert ALL delete ALL and ALL replace ALL specified ALL words ALL in ALL certain ALL sentences. NONONONONONONOPN yes?
+YES Someone YES found YES two marks.

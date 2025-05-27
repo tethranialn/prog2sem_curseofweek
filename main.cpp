@@ -17,9 +17,9 @@ void ShowMenu() {
 }
 
 void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matchingSentences, int& matchCount, std::ostream& detailedOut, std::ostream& conciseOut) {
-    detailedOut << "\n=== Sentences ending with word containing \"" << word << "\" ===\n";
-    conciseOut << "\n=== Sentences ending with word containing \"" << word << "\" ===\n";
-    std::cout << "\n=== Sentences ending with word containing \"" << word << "\" ===\n";
+    detailedOut << "\n=== Sentences ending with word \"" << word << "\" ===\n";
+    conciseOut << "\n=== Sentences ending with word \"" << word << "\" ===\n";
+    std::cout << "\n=== Sentences ending with word \"" << word << "\" ===\n";
     std::cout << std::flush;
     matchCount = 0;
 
@@ -27,6 +27,7 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
     int currentSentence = -1;
     EL_Stroka* lastWordBlock = nullptr;
     bool found = false;
+    int cmpResult = 0;
 
     for (EL_V* level = doc.head; level; level = level->next) {
         if (!level || !level->line.head) continue;
@@ -34,7 +35,8 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
         while (block) {
             if (block->sentence_id != currentSentence) {
                 if (currentSentence != -1 && lastWordBlock && lastWord[0] != '\0') {
-                    if (IsSubstring(lastWord, word)) {
+                    CompareStrings(lastWord, word, cmpResult);
+                    if (cmpResult == 0) { 
                         if (matchCount < 100) {
                             matchingSentences[matchCount++] = currentSentence;
                         }
@@ -42,20 +44,17 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
                         conciseOut << "Sentence " << currentSentence << ": ";
                         std::cout << "Sentence " << currentSentence << ": ";
 
-                        // Обход всех блоков в предложении для вывода
                         for (EL_V* printLevel = doc.head; printLevel; printLevel = printLevel->next) {
                             EL_Stroka* printBlock = printLevel->line.head;
                             while (printBlock) {
                                 if (printBlock->sentence_id == currentSentence) {
                                     if (printBlock->type == LETTERS && !printBlock->content.letters.is_word_part) {
-                                        // Для conciseOut и std::cout
                                         EL_Stroka* wordPart = printBlock;
                                         while (wordPart) {
                                             std::cout << wordPart->content.letters.data;
                                             conciseOut << wordPart->content.letters.data;
                                             wordPart = wordPart->next_word_block;
                                         }
-                                        // Для detailedOut
                                         detailedOut << "[WORD: \"" << printBlock->content.letters.data;
                                         wordPart = printBlock->next_word_block;
                                         while (wordPart) {
@@ -65,12 +64,10 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
                                         detailedOut << "\" (Sent: " << printBlock->sentence_id << ")]\n";
                                     }
                                     else if (printBlock->type == SPACES) {
-                                        // Для conciseOut и std::cout
                                         for (int i = 0; i < printBlock->content.spaces.count; i++) {
                                             std::cout << ' ';
                                             conciseOut << ' ';
                                         }
-                                        // Для detailedOut
                                         detailedOut << "[SPACE x" << printBlock->content.spaces.count << "]\n";
                                     }
                                     else if (printBlock->type == COMMA) {
@@ -109,9 +106,9 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
         }
     }
 
-    // Проверка последнего предложения
     if (currentSentence != -1 && lastWordBlock && lastWord[0] != '\0') {
-        if (IsSubstring(lastWord, word)) {
+        CompareStrings(lastWord, word, cmpResult);
+        if (cmpResult == 0) { 
             if (matchCount < 100) {
                 matchingSentences[matchCount++] = currentSentence;
             }
@@ -119,20 +116,17 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
             conciseOut << "Sentence " << currentSentence << ": ";
             std::cout << "Sentence " << currentSentence << ": ";
 
-            // Вывод последнего предложения
             for (EL_V* printLevel = doc.head; printLevel; printLevel = printLevel->next) {
                 EL_Stroka* printBlock = printLevel->line.head;
                 while (printBlock) {
                     if (printBlock->sentence_id == currentSentence) {
                         if (printBlock->type == LETTERS && !printBlock->content.letters.is_word_part) {
-                            // Для conciseOut и std::cout
                             EL_Stroka* wordPart = printBlock;
                             while (wordPart) {
                                 std::cout << wordPart->content.letters.data;
                                 conciseOut << wordPart->content.letters.data;
                                 wordPart = wordPart->next_word_block;
                             }
-                            // Для detailedOut
                             detailedOut << "[WORD: \"" << printBlock->content.letters.data;
                             wordPart = printBlock->next_word_block;
                             while (wordPart) {
@@ -142,12 +136,10 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
                             detailedOut << "\" (Sent: " << printBlock->sentence_id << ")]\n";
                         }
                         else if (printBlock->type == SPACES) {
-                            // Для conciseOut и std::cout
                             for (int i = 0; i < printBlock->content.spaces.count; i++) {
                                 std::cout << ' ';
                                 conciseOut << ' ';
                             }
-                            // Для detailedOut
                             detailedOut << "[SPACE x" << printBlock->content.spaces.count << "]\n";
                         }
                         else if (printBlock->type == COMMA) {
@@ -174,9 +166,9 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
     }
 
     if (!found) {
-        detailedOut << "No sentences with last word containing \"" << word << "\" found.\n";
-        conciseOut << "No sentences with last word containing \"" << word << "\" found.\n";
-        std::cout << "No sentences with last word containing \"" << word << "\" found.\n" << std::flush;
+        detailedOut << "No sentences with last word \"" << word << "\" found.\n";
+        conciseOut << "No sentences with last word \"" << word << "\" found.\n";
+        std::cout << "No sentences with last word \"" << word << "\" found.\n" << std::flush;
     }
     else {
         std::cout << "Matching sentences: ";
@@ -186,7 +178,6 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
         std::cout << "\n" << std::flush;
     }
 }
-
 int main() {
     Form_V document;
     std::ofstream detailedOut("output_detailed.txt", std::ofstream::trunc);

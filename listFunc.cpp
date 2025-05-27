@@ -49,7 +49,7 @@ void CopyString(char* dest, const char* src, int maxLen) {
 
 bool IsSubstring(const char* str, const char* substr) {
     if (!str || !substr) return false;
-    if (!*substr) return true; // Empty substring matches any string
+    if (!*substr) return true; 
 
     while (*str) {
         const char* s = str;
@@ -58,7 +58,7 @@ bool IsSubstring(const char* str, const char* substr) {
             s++;
             sub++;
         }
-        if (!*sub) return true; // Found a match
+        if (!*sub) return true; 
         str++;
     }
     return false;
