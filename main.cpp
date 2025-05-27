@@ -15,10 +15,11 @@ void ShowMenu() {
         << "====================\n"
         << "Choose option: ";
 }
+
 void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matchingSentences, int& matchCount, std::ostream& detailedOut, std::ostream& conciseOut) {
-    detailedOut << "\n=== Sentences ending with \"" << word << "\" ===\n";
-    conciseOut << "\n=== Sentences ending with \"" << word << "\" ===\n";
-    std::cout << "\n=== Sentences ending with \"" << word << "\" ===\n";
+    detailedOut << "\n=== Sentences ending with word containing \"" << word << "\" ===\n";
+    conciseOut << "\n=== Sentences ending with word containing \"" << word << "\" ===\n";
+    std::cout << "\n=== Sentences ending with word containing \"" << word << "\" ===\n";
     std::cout << std::flush;
     matchCount = 0;
 
@@ -33,9 +34,7 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
         while (block) {
             if (block->sentence_id != currentSentence) {
                 if (currentSentence != -1 && lastWordBlock && lastWord[0] != '\0') {
-                    int cmpResult = 0;
-                    CompareStrings(lastWord, word, cmpResult);
-                    if (cmpResult == 0) {
+                    if (IsSubstring(lastWord, word)) {
                         if (matchCount < 100) {
                             matchingSentences[matchCount++] = currentSentence;
                         }
@@ -112,9 +111,7 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
 
     // Проверка последнего предложения
     if (currentSentence != -1 && lastWordBlock && lastWord[0] != '\0') {
-        int cmpResult = 0;
-        CompareStrings(lastWord, word, cmpResult);
-        if (cmpResult == 0) {
+        if (IsSubstring(lastWord, word)) {
             if (matchCount < 100) {
                 matchingSentences[matchCount++] = currentSentence;
             }
@@ -177,9 +174,9 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
     }
 
     if (!found) {
-        detailedOut << "No sentences ending with \"" << word << "\" found.\n";
-        conciseOut << "No sentences ending with \"" << word << "\" found.\n";
-        std::cout << "No sentences ending with \"" << word << "\" found.\n" << std::flush;
+        detailedOut << "No sentences with last word containing \"" << word << "\" found.\n";
+        conciseOut << "No sentences with last word containing \"" << word << "\" found.\n";
+        std::cout << "No sentences with last word containing \"" << word << "\" found.\n" << std::flush;
     }
     else {
         std::cout << "Matching sentences: ";
@@ -188,7 +185,9 @@ void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matching
         }
         std::cout << "\n" << std::flush;
     }
-}int main() {
+}
+
+int main() {
     Form_V document;
     std::ofstream detailedOut("output_detailed.txt", std::ofstream::trunc);
     std::ofstream conciseOut("output_concise.txt", std::ofstream::trunc);

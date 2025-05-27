@@ -46,3 +46,20 @@ void CopyString(char* dest, const char* src, int maxLen) {
     }
     dest[i] = '\0';
 }
+
+bool IsSubstring(const char* str, const char* substr) {
+    if (!str || !substr) return false;
+    if (!*substr) return true; // Empty substring matches any string
+
+    while (*str) {
+        const char* s = str;
+        const char* sub = substr;
+        while (*s && *sub && *s == *sub) {
+            s++;
+            sub++;
+        }
+        if (!*sub) return true; // Found a match
+        str++;
+    }
+    return false;
+}

@@ -4,12 +4,15 @@ punctuation marks! Convert text according to the sequence of editing commands,
  which should allow you to insert, delete, and replace specified words in certain sentences. yes?
 Someone found two marks.
 
-=== Sentences ending with "marks" ===
-Sentence 0: The text       is a sequence; of separate sentences: containing words and punctuation marks!
-Sentence 3: Someone found two marks.
+=== Sentences ending with word containing "es" ===
+Sentence 1:  Convert text according to the sequence of editing commands, which should allow you to insert, delete, and replace specified words in certain sentences.
+Sentence 2:  yes?
+
+=== Sentences ending with word containing "ence" ===
+Sentence 1:  Convert text according to the sequence of editing commands, which should allow you to insert, delete, and replace specified words in certain sentences.
 
 === Final Document ===
-The new text       is a sequence; of separate sentences: containing words and 
+The text       is a sequence; of separate sentences: containing words and 
 punctuation marks! Convert text according to the sequence of editing commands,
  which should allow you to insert, delete, and replace specified words in certain sentences. yes?
 Someone found two marks.
