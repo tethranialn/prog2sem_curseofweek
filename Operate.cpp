@@ -84,21 +84,6 @@ void InsertWord(Form_V& doc, const char* targetWord, const char* newWord, int se
                         currentPart = partBlock;
                     }
 
-                    EL_Stroka* spaceBefore = nullptr;
-                    InitBlock(spaceBefore, SPACES);
-                    if (!spaceBefore) {
-                        std::cerr << "Error: Failed to allocate memory for space before block.\n";
-                        EL_Stroka* temp = newBlock;
-                        while (temp) {
-                            EL_Stroka* next = temp->next_word_block;
-                            delete temp;
-                            temp = next;
-                        }
-                        return;
-                    }
-                    spaceBefore->sentence_id = sentenceNum;
-                    spaceBefore->content.spaces.count = 1;
-
                     EL_Stroka* spaceAfter = nullptr;
                     InitBlock(spaceAfter, SPACES);
                     if (!spaceAfter) {
@@ -109,21 +94,19 @@ void InsertWord(Form_V& doc, const char* targetWord, const char* newWord, int se
                             delete temp;
                             temp = next;
                         }
-                        delete spaceBefore;
                         return;
                     }
                     spaceAfter->sentence_id = sentenceNum;
                     spaceAfter->content.spaces.count = 1;
 
-                    spaceBefore->next = newBlock;
                     newBlock->next = spaceAfter;
                     spaceAfter->next = block;
 
                     if (prev) {
-                        prev->next = spaceBefore;
+                        prev->next = newBlock;
                     }
                     else {
-                        level->line.head = spaceBefore;
+                        level->line.head = newBlock;
                     }
                     prev = spaceAfter;
                     inserted = true;
@@ -146,9 +129,7 @@ void InsertWord(Form_V& doc, const char* targetWord, const char* newWord, int se
         if (inserted && !insertBeforeAll) break;
         level = level->next;
     }
-}
-
-void RemoveSpecificPunctuation(Form_V& doc, int sentenceNum, char symbol, std::ostream& out) {
+}void RemoveSpecificPunctuation(Form_V& doc, int sentenceNum, char symbol, std::ostream& out) {
     for (EL_V* level = doc.head; level; level = level->next) {
         if (!level || !level->line.head) continue;
         EL_Stroka* block = level->line.head;
@@ -182,7 +163,6 @@ void RemoveSpecificPunctuation(Form_V& doc, int sentenceNum, char symbol, std::o
     out << "Removed symbol: " << symbol << "\nSentence: " << sentenceNum << "\n";
     PrintDocument(doc, out);
 }
-
 void RemoveAllPunctuation(Form_V& doc, int sentenceNum, std::ostream& out) {
     for (EL_V* level = doc.head; level; level = level->next) {
         if (!level || !level->line.head) continue;
@@ -216,7 +196,6 @@ void RemoveAllPunctuation(Form_V& doc, int sentenceNum, std::ostream& out) {
     out << "Sentence: " << sentenceNum << "\n";
     PrintDocument(doc, out);
 }
-
 void PrintOperationResult(const Form_V& doc, const char* targetWord, const char* newWord, int sentenceNum, std::ostream& out) {
     out << "Inserted word \"" << newWord << "\" before \"" << targetWord << "\" in sentence " << sentenceNum << "\n";
     PrintDocument(doc, out);

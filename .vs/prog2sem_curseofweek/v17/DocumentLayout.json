@@ -3,32 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\output_detailed.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:output_detailed.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\output_concise.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:output_concise.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\InpS.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:InpS.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\input.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:input.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\listFunc.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:listFunc.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\output_concise.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:output_concise.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\output_detailed.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:output_detailed.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Operate.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:Operate.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\InpS.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:InpS.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\InpS.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:InpS.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\listFunc.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:listFunc.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\listFunc.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:listFunc.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -37,10 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\list.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:list.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Operate.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:Operate.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Operate.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -53,10 +57,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Del.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:Del.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\listFunc.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9BDD3C63-9225-4166-B115-F637EEE9A9E9}|prog2sem_curseofweek.vcxproj|solutionrelative:listFunc.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,11 +66,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "input.txt",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\input.txt",
               "RelativeDocumentMoniker": "input.txt",
@@ -84,13 +84,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAcwBIAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAswL4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-04-14T14:25:08.567Z",
               "IsPinned": true,
@@ -98,13 +98,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "output_concise.txt",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\output_concise.txt",
               "RelativeDocumentMoniker": "output_concise.txt",
               "ToolTip": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\output_concise.txt",
               "RelativeToolTip": "output_concise.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-05-26T19:00:50.301Z",
               "IsPinned": true,
@@ -112,13 +112,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "output_detailed.txt",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\output_detailed.txt",
               "RelativeDocumentMoniker": "output_detailed.txt",
               "ToolTip": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\output_detailed.txt",
               "RelativeToolTip": "output_detailed.txt",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAAABsAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAKMAAAAAAAAAAAAAAA0AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-05-26T19:00:50.245Z",
               "IsPinned": true,
@@ -134,20 +134,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "InpS.cpp",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\InpS.cpp",
               "RelativeDocumentMoniker": "InpS.cpp",
               "ToolTip": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\InpS.cpp",
               "RelativeToolTip": "InpS.cpp",
-              "ViewState": "AgIAAIQAAAAAAAAAAAAIwKcAAABGAAAAAAAAAA==",
+              "ViewState": "AgIAAKkAAAAAAAAAAAAswKcAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-19T09:56:24.606Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
+              "Title": "Operate.cpp",
+              "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Operate.cpp",
+              "RelativeDocumentMoniker": "Operate.cpp",
+              "ToolTip": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Operate.cpp",
+              "RelativeToolTip": "Operate.cpp",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAswIMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-26T11:59:50.894Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "listFunc.cpp",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\listFunc.cpp",
               "RelativeDocumentMoniker": "listFunc.cpp",
@@ -155,8 +168,7 @@
               "RelativeToolTip": "listFunc.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAiwC8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-19T09:50:39.425Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T09:50:39.425Z"
             },
             {
               "$type": "Document",
@@ -168,12 +180,11 @@
               "RelativeToolTip": "InpS.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-19T09:56:34.865Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T09:56:34.865Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "list.cpp",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\list.cpp",
               "RelativeDocumentMoniker": "list.cpp",
@@ -181,12 +192,11 @@
               "RelativeToolTip": "list.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-19T09:52:25.062Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T09:52:25.062Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 7,
               "Title": "listFunc.h",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\listFunc.h",
               "RelativeDocumentMoniker": "listFunc.h",
@@ -194,12 +204,11 @@
               "RelativeToolTip": "listFunc.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-19T09:50:17.305Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T09:50:17.305Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Del.h",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Del.h",
               "RelativeDocumentMoniker": "Del.h",
@@ -207,12 +216,11 @@
               "RelativeToolTip": "Del.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-19T09:51:45.877Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T09:51:45.877Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Del.cpp",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Del.cpp",
               "RelativeDocumentMoniker": "Del.cpp",
@@ -220,25 +228,11 @@
               "RelativeToolTip": "Del.cpp",
               "ViewState": "AgIAAAQAAAAAAAAAAAAiwBgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-19T09:51:23.709Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T09:51:23.709Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "Operate.cpp",
-              "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Operate.cpp",
-              "RelativeDocumentMoniker": "Operate.cpp",
-              "ToolTip": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Operate.cpp",
-              "RelativeToolTip": "Operate.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-26T11:59:50.894Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "list.h",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\list.h",
               "RelativeDocumentMoniker": "list.h",
@@ -246,12 +240,11 @@
               "RelativeToolTip": "list.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-19T09:48:30.897Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T09:48:30.897Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Operate.h",
               "DocumentMoniker": "C:\\Users\\chivo\\OneDrive\\Documents\\GitHub\\prog2sem_curseofweek\\Operate.h",
               "RelativeDocumentMoniker": "Operate.h",
@@ -259,8 +252,7 @@
               "RelativeToolTip": "Operate.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-26T11:59:58.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-26T11:59:58.249Z"
             }
           ]
         }
