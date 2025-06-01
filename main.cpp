@@ -15,7 +15,6 @@ void ShowMenu() {
         << "====================\n"
         << "Choose option: ";
 }
-
 void DisplayMatchingSentences(const Form_V& doc, const char* word, int* matchingSentences, int& matchCount, std::ostream& detailedOut, std::ostream& conciseOut) {
     detailedOut << "\n=== Sentences ending with word \"" << word << "\" ===\n";
     conciseOut << "\n=== Sentences ending with word \"" << word << "\" ===\n";
